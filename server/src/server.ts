@@ -1,6 +1,8 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
+import dealRoutes from "./routes/deal.ts";
+
 
 dotenv.config();
 
@@ -12,6 +14,9 @@ app.use(express.json());
 app.get("/", (req, res) => {
   res.json("api is running...");
 });
+
+
+app.use("/api", dealRoutes);
 
 const PORT = process.env.PORT || 5000;
 
