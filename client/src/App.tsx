@@ -1,9 +1,7 @@
-const App = () => {
+import DealsPage from "./pages/DealsPage";
 
-  return (
-
-    <h1 className="text-3xl text-center text-blue-600">This is working</h1>
-  )
+function App() {
+  return <DealsPage />;
 }
 
-export default App ;
+export default App;
