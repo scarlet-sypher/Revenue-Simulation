@@ -18,7 +18,8 @@ export const createWeeklyBuckets = (deals: Deal[]) => {
 
     if (!month) continue ;
 
-    const week = Math.floor((date.getDate() - 1) / 7) + 1;
+    const rawWeek = Math.floor((date.getDate() - 1) / 7) + 1;
+    const week = Math.min(rawWeek, 4);
 
     let finalWeek = week;
     if (month === 8) finalWeek += 4 ;
