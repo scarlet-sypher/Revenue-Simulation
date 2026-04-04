@@ -6,6 +6,7 @@ import {
   Tooltip,
   CartesianGrid,
   ResponsiveContainer,
+  Legend,
 } from "recharts";
 
 type Props = {
@@ -24,6 +25,7 @@ function RevenueChart({ baseline, scenario }: Props) {
     <div className="w-full h-[300px]">
       <ResponsiveContainer>
         <LineChart data={data}>
+          <Legend />
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="week" />
           <YAxis />

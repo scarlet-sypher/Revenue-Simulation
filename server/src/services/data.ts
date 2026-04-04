@@ -29,6 +29,8 @@ export const splitDeals = ( deals: Deal[] ) => {
 
       else if (m >= 4 && m <= 6) q2.push(d); // Q2
 
+      else if (m >= 7) q1.push(d);
+
 
     } 
     
