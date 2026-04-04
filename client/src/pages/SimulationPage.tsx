@@ -56,8 +56,8 @@ function SimulationPage() {
           <p>Conversion Rate: {conversion}%</p>
           <input
             type="range"
-            min="-50"
-            max="50"
+            min="-20"
+            max="20"
             value={conversion}
             onChange={(e) => setConversion(Number(e.target.value))}
             className="w-full"
@@ -69,8 +69,8 @@ function SimulationPage() {
           <p>Average Deal Size: {dealSize}%</p>
           <input
             type="range"
-            min="-50"
-            max="100"
+            min="-20"
+            max="20"
             value={dealSize}
             onChange={(e) => setDealSize(Number(e.target.value))}
             className="w-full"
@@ -82,8 +82,8 @@ function SimulationPage() {
           <p>Sales Cycle (days): {cycle}</p>
           <input
             type="range"
-            min="-30"
-            max="30"
+            min="-5"
+            max="5"
             value={cycle}
             onChange={(e) => setCycle(Number(e.target.value))}
             className="w-full"

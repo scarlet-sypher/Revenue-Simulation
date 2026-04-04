@@ -23,19 +23,20 @@ export const runSimulation = (
 
 ) => {
     
+    const conversionChange = Math.max(-20, Math.min(20, input.conversionChange ?? 0));
+    const dealSizeChange   = Math.max(-20, Math.min(20, input.dealSizeChange ?? 0));
+    const salesCycleChange = Math.max(-5,  Math.min(5,  input.salesCycleChange ?? 0));
 
-    const conversionChange = input.conversionChange ?? 0;
-    const dealSizeChange = input.dealSizeChange ?? 0;
-    const salesCycleChange = input.salesCycleChange ?? 0;
-    
+
+
     const baseline: number[] = [];
     const scenario: number[] = [];
     
     
-    const newConversion = metrics.conversionRate * (1 + conversionChange / 100);
+    const rawConversion = metrics.conversionRate * (1 + conversionChange / 100);
+    const newConversion = Math.min(1, Math.max(0, rawConversion));
 
-    const newDealSize = metrics.avgDealSize * (1 + dealSizeChange / 100);
-
+    const newDealSize = Math.max(0, metrics.avgDealSize * (1 + dealSizeChange / 100));
 
     const effectiveCycle = Math.max(1, metrics.avgSalesCycle + salesCycleChange);
     const cycleMultiplier = metrics.avgSalesCycle === 0 ? 1 : metrics.avgSalesCycle / effectiveCycle;
@@ -68,13 +69,17 @@ export const runSimulation = (
 
     const drivers: string[] = [];
 
-    if (conversionChange > 0) drivers.push("higher conversion rate");
-    if (conversionChange < 0) drivers.push("lower conversion rate");
-    if (dealSizeChange > 0) drivers.push("larger average deal size");
-    if (dealSizeChange < 0) drivers.push("smaller average deal size");
-    if (salesCycleChange < 0) drivers.push("shorter sales cycle");
-    if (salesCycleChange > 0) drivers.push("longer sales cycle");
-    if (drivers.length === 0) drivers.push("no significant change applied");
+    if (conversionChange !== 0)
+    drivers.push(`${conversionChange > 0 ? "higher" : "lower"} conversion rate (${conversionChange > 0 ? "+" : ""}${conversionChange}%)`);
+
+    if (dealSizeChange !== 0)
+    drivers.push(`${dealSizeChange > 0 ? "larger" : "smaller"} average deal size (${dealSizeChange > 0 ? "+" : ""}${dealSizeChange}%)`);
+
+    if (salesCycleChange !== 0)
+    drivers.push(`${salesCycleChange < 0 ? "shorter" : "longer"} sales cycle (${salesCycleChange > 0 ? "+" : ""}${salesCycleChange} days)`);
+
+    if (drivers.length === 0)
+    drivers.push("no changes applied showing baseline projection");
 
 
 
