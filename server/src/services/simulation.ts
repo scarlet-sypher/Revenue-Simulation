@@ -16,6 +16,7 @@ export const runSimulation = (
 
         conversionRate: number;
         avgDealSize: number;
+         avgSalesCycle: number;
 
     },
     input: SimulationInput
@@ -25,7 +26,7 @@ export const runSimulation = (
 
     const conversionChange = input.conversionChange || 0;
     const dealSizeChange = input.dealSizeChange || 0;
-    
+    const salesCycleChange = input.salesCycleChange ?? 0;
     
     const baseline: number[] = [];
     const scenario: number[] = [];
@@ -35,6 +36,10 @@ export const runSimulation = (
 
     const newDealSize = metrics.avgDealSize * (1 + dealSizeChange / 100);
 
+
+    const effectiveCycle = Math.max(1, metrics.avgSalesCycle + salesCycleChange);
+    const cycleMultiplier = metrics.avgSalesCycle === 0 ? 1 : metrics.avgSalesCycle / effectiveCycle;
+
     let baseTotal = 0;
     let scenTotal = 0;
 
@@ -43,7 +48,7 @@ export const runSimulation = (
         const dealCount = buckets[i]?.length || 0;
 
         const baseRevenue = dealCount * metrics.conversionRate * metrics.avgDealSize;
-        const scenarioRevenue = dealCount * newConversion * newDealSize;
+        const scenarioRevenue = dealCount * cycleMultiplier * newConversion * newDealSize;
 
         const roundedBase = round(baseRevenue);
         const roundedScenario = round(scenarioRevenue);
@@ -62,15 +67,16 @@ export const runSimulation = (
     const percentageImpact = baseTotal === 0 ? 0 : round((absoluteImpact / baseTotal) * 100);
 
     const drivers: string[] = [];
-    if (conversionChange > 0) drivers.push("conversion increase");
-    if (conversionChange < 0) drivers.push("conversion decrease");
+    
+    if (conversionChange > 0) drivers.push("higher conversion rate");
+    if (conversionChange < 0) drivers.push("lower conversion rate");
+    if (dealSizeChange > 0) drivers.push("larger average deal size");
+    if (dealSizeChange < 0) drivers.push("smaller average deal size");
+    if (salesCycleChange < 0) drivers.push("shorter sales cycle");
+    if (salesCycleChange > 0) drivers.push("longer sales cycle");
+    if (drivers.length === 0) drivers.push("no significant change applied");
 
-    if (dealSizeChange > 0) drivers.push("deal size increase");
-    if (dealSizeChange < 0) drivers.push("deal size decrease");
 
-    if (drivers.length === 0) {
-        drivers.push("no significant change");
-    }
 
     return {
 
