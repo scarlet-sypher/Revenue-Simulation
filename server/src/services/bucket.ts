@@ -24,6 +24,8 @@ export const createWeeklyBuckets = (deals: Deal[]) => {
     if (month === 8) finalWeek += 4 ;
     if (month === 9) finalWeek += 8 ;
 
+    finalWeek = Math.min(finalWeek, 12);
+
     buckets[finalWeek]?.push(d);
     
   }
