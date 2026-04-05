@@ -4,7 +4,7 @@ import SimulationPage from "./pages/SimulationPage";
 function App() {
   // return <DealsPage />;
 
-  return <SimulationPage /> ; 
+  return <SimulationPage />;
 }
 
 export default App;

@@ -8,7 +8,6 @@ type Props = {
 };
 
 function SliderControl({ label, value, min, max, unit, onChange }: Props) {
-
   const handleNumber = (raw: string) => {
     const parsed = parseInt(raw, 10);
     if (isNaN(parsed)) return;
@@ -45,8 +44,14 @@ function SliderControl({ label, value, min, max, unit, onChange }: Props) {
       />
 
       <div className="flex justify-between mt-1">
-        <span className="text-xs text-zinc-600">{min}{unit}</span>
-        <span className="text-xs text-zinc-600">+{max}{unit}</span>
+        <span className="text-xs text-zinc-600">
+          {min}
+          {unit}
+        </span>
+        <span className="text-xs text-zinc-600">
+          +{max}
+          {unit}
+        </span>
       </div>
     </div>
   );

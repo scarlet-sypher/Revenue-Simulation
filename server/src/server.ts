@@ -4,7 +4,6 @@ import dotenv from "dotenv";
 import dealRoutes from "./routes/deal.ts";
 import simulationRoutes from "./routes/simulation.ts";
 
-
 dotenv.config();
 
 const app = express();
@@ -16,8 +15,7 @@ app.get("/", (req, res) => {
   res.json("api is running...");
 });
 
-
-// app.use("/api", dealRoutes); //testing 
+// app.use("/api", dealRoutes); //testing
 
 app.use("/api", simulationRoutes);
 

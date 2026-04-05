@@ -7,7 +7,6 @@ import StatCard from "../components/StatCard";
 import InsightPanel from "../components/InsightPanel";
 
 function SimulationPage() {
-
   const [conversion, setConversion] = useState(0);
   const [dealSize, setDealSize] = useState(0);
   const [cycle, setCycle] = useState(0);
@@ -28,7 +27,6 @@ function SimulationPage() {
       });
 
       setData(res);
-
     } catch (err) {
       console.error("Simulation failed", err);
       setError("Could not reach the server. Make sure the backend is running.");
@@ -57,20 +55,16 @@ function SimulationPage() {
     <div className="min-h-screen bg-zinc-900 text-white">
       <div className=" px-6 py-4 flex flex-col items-center justify-center">
         <h1 className="text-2xl font-semibold">Revenue Simulation</h1>
-        
       </div>
 
       <div className="max-w-screen mx-auto px-6 py-1">
         <div className="grid grid-cols-[300px_1fr] gap-6 items-start">
-
           <div className="bg-zinc-800 border border-zinc-700 rounded-lg p-5">
-
             <p className="text-xs font-semibold text-zinc-500 uppercase tracking-widest mb-5">
               Controls
             </p>
 
             <div className="space-y-6">
-
               <SliderControl
                 label="Conversion Rate"
                 value={conversion}
@@ -97,11 +91,9 @@ function SimulationPage() {
                 unit=" days"
                 onChange={setCycle}
               />
-
             </div>
 
             <div className="flex gap-2 mt-6">
-
               <button
                 onClick={handleReset}
                 disabled={loading}
@@ -117,7 +109,6 @@ function SimulationPage() {
               >
                 {loading ? "Running..." : "Run Simulation"}
               </button>
-
             </div>
 
             {error && (
@@ -125,11 +116,9 @@ function SimulationPage() {
                 <p className="text-red-400 text-sm">{error}</p>
               </div>
             )}
-
           </div>
 
           <div className="space-y-5">
-
             {!data && !loading && (
               <div className="border border-dashed border-zinc-700 rounded-lg p-12 text-center">
                 <p className="text-zinc-500 text-sm">
@@ -146,9 +135,7 @@ function SimulationPage() {
 
             {data && !loading && (
               <>
-
                 <div className="grid grid-cols-3 gap-3">
-
                   <StatCard
                     label="Baseline"
                     value={`₹${data.baseline.total_revenue.toFixed(0)}`}
@@ -165,7 +152,6 @@ function SimulationPage() {
                     sub={`${data.impact.percentage >= 0 ? "+" : ""}${data.impact.percentage.toFixed(1)}%`}
                     highlight={isPositive ? "green" : "red"}
                   />
-
                 </div>
 
                 <div className="border border-zinc-700 rounded-lg p-4">
@@ -183,14 +169,11 @@ function SimulationPage() {
                   drivers={data.drivers}
                   positive={isPositive}
                 />
-
               </>
             )}
-
           </div>
         </div>
       </div>
-
     </div>
   );
 }
