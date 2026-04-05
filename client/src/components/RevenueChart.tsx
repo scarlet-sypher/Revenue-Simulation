@@ -14,9 +14,17 @@ type Props = {
   scenario: number[];
 };
 
+const WEEK_LABELS = [
+  "Jul W1", "Jul W2", "Jul W3", "Jul W4",
+  "Aug W1", "Aug W2", "Aug W3", "Aug W4",
+  "Sep W1", "Sep W2", "Sep W3", "Sep W4",
+];
+
+
 function RevenueChart({ baseline, scenario }: Props) {
   const data = baseline.map((b, i) => ({
-    week: `W${i + 1}`,
+    week: WEEK_LABELS[i] ,
+
     baseline: b,
     scenario: scenario[i],
   }));
